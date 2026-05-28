@@ -10,7 +10,7 @@ from transformers import (
 
 # 1. 데이터셋 로드
 # 해당 데이터셋은 'image'와 'label'(단수형) 컬럼을 가지며, train/test 스플릿만 있습니다.
-dataset = load_dataset("rokmr/pets")
+dataset = load_dataset("yourdatasets")
 
 # 라벨 정보 확인 및 매핑 딕셔너리 생성
 labels = dataset["train"].features["label"].names
@@ -62,7 +62,7 @@ def compute_metrics(eval_pred):
     return {"accuracy": accuracy}
 
 training_args = TrainingArguments(
-    output_dir="./vit-cars-result",
+    output_dir="./vit-result",
     per_device_train_batch_size=32, 
     per_device_eval_batch_size=32,
     eval_strategy="epoch",  
@@ -82,7 +82,7 @@ training_args = TrainingArguments(
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=dataset["train"],
+    train_dataset=dataset["train"],  #여기
     eval_dataset=dataset["test"],
     data_collator=collate_fn,
     compute_metrics=compute_metrics,
